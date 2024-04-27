@@ -1,5 +1,6 @@
 import pandas
 import streamlit as st
+from functionsCRUD import *
 
 st.title('Sistema Dieguinho Alimentos - ME')
 st.markdown('## Cadastro de produtos')
@@ -11,7 +12,6 @@ image = st.text_input('URL da imagem do produto:', placeholder="URL com até 100
 
 button = st.button('CADASTRAR')
 
-st.write(cod)
-st.write(name)
-st.write(price)
-st.write(image)
+
+if button:
+    cadastrar(name, price, cod, image)
