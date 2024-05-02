@@ -7,5 +7,5 @@ Com o objetivo de explorar os conceitos aprtendidos sobre python, linguagem MySQ
 - Python versão 3.12.2
 - MySQL versão 8.0 ou superior
 - MySQL Conector 8.3.0
-- stremlit
+- streamlit
 
