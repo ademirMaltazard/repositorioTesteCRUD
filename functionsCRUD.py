@@ -36,8 +36,14 @@ def DeleteProductByID(id):
 
 def SearchAllproducts():
     conexao, cursor = ConnectDB()
-    query = f'SELECT * FROM produto'
+    query = f'SELECT id_produto, nome_produto, preco_produto FROM produto'
     cursor.execute(query)
     result = cursor.fetchall()
     return result
 
+def SearchOneproduct(id):
+    conexao, cursor = ConnectDB()
+    query = f'SELECT * FROM produto WHERE id_produto = "{id}"'
+    cursor.execute(query)
+    result = cursor.fetchone()
+    return result

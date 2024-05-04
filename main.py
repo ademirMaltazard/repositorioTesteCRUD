@@ -8,6 +8,7 @@ col1, col2 = st.columns(2)
 
 containerCadastrar = col1.container(border=True)
 containerAlterar = col2.container(border=True)
+containerList = st.expander('Mostrar todos os produtos')
 
 with containerCadastrar:
     containerCadastrar.markdown('## Cadastro de produtos')
@@ -28,8 +29,25 @@ with containerAlterar:
 
     alterButton = containerAlterar.button('Alterar')
 
-products = SearchAllproducts()
-df = st.dataframe(products)
+with containerList:
+    products = SearchAllproducts()
+    productsTable = pandas.DataFrame(products, columns=('id', 'nome', 'preço'))
+    st.write(productsTable)
+
+col3, col4 = st.columns(2)
+containerListOne = col3.container(border=True)
+
+with containerListOne:
+    containerListOne.markdown("## Buscar um produto")
+    id = containerListOne.text_input('ID do produto para pesquisa')
+    SearchOneButton = containerListOne.button('procurar')
+
+    if SearchOneButton:
+        product = SearchOneproduct(id)
+
+        if product:
+            st.image(f'{product[3]}')
+
 
 deleteButton = st.button('Excluir')
 
