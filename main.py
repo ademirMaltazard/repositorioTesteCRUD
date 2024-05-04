@@ -3,15 +3,39 @@ import streamlit as st
 from functionsCRUD import *
 
 st.title('Sistema Dieguinho Alimentos - ME')
-st.markdown('## Cadastro de produtos')
 
-cod = st.text_input('Codigo do produto')
-name = st.text_input('Nome do produto:', placeholder='Nome do produto com max de 100 caracteres')
-price = float(st.number_input('Preço do produto:'))
-image = st.text_input('URL da imagem do produto:', placeholder="URL com até 100 caracteres")
+col1, col2 = st.columns(2)
 
-button = st.button('CADASTRAR')
+containerCadastrar = col1.container(border=True)
+containerAlterar = col2.container(border=True)
 
+with containerCadastrar:
+    containerCadastrar.markdown('## Cadastro de produtos')
 
-if button:
-    cadastrar(name, price, cod, image)
+    cod = containerCadastrar.text_input('Codigo do produto')
+    name = containerCadastrar.text_input('Nome do produto:', placeholder='Nome do produto com max de 100 caracteres')
+    price = float(containerCadastrar.number_input('Preço do produto:'))
+    image = containerCadastrar.text_input('URL da imagem do produto:', placeholder="URL com até 100 caracteres")
+
+    RegisterButton = containerCadastrar.button('CADASTRAR')
+
+with containerAlterar:
+    containerAlterar.markdown('## Alterar produtos')
+    newCod = containerAlterar.text_input('Novo codigo do produto')
+    newName = containerAlterar.text_input('Novo nome do produto:', placeholder='Nome do produto com max de 100 caracteres')
+    newPrice = float(containerAlterar.number_input('Novo preço do produto:'))
+    newImage = containerAlterar.text_input('Nova URL da imagem do produto:', placeholder="URL com até 100 caracteres")
+
+    alterButton = containerAlterar.button('Alterar')
+
+products = SearchAllproducts()
+df = st.dataframe(products)
+
+deleteButton = st.button('Excluir')
+
+if RegisterButton:
+    RegisterNewProduct(name, price, cod, image)
+
+if deleteButton:
+    DeleteProductByID(cod)
+
