@@ -1,4 +1,4 @@
-import pandas
+import pandas as pd
 import streamlit as st
 from functionsCRUD import *
 
@@ -20,6 +20,9 @@ with containerCadastrar:
 
     RegisterButton = containerCadastrar.button('CADASTRAR')
 
+    if RegisterButton:
+        RegisterNewProduct(name, price, cod, image)
+
 with containerAlterar:
     containerAlterar.markdown('## Alterar produtos')
     newCod = containerAlterar.text_input('Novo codigo do produto')
@@ -30,30 +33,33 @@ with containerAlterar:
     alterButton = containerAlterar.button('Alterar')
 
 with containerList:
-    products = SearchAllproducts()
-    productsTable = pandas.DataFrame(products, columns=('id', 'nome', 'preço'))
-    st.write(productsTable)
-
-col3, col4 = st.columns(2)
-containerListOne = col3.container(border=True)
+    try:
+        products = SearchAllproducts()
+        productsTable = pd.DataFrame(products, columns=('id', 'nome', 'preço'))
+        st.write(productsTable)
+    except:
+        containerList.write('ERROR 404. Not found.')
+containerListOne = st.container(border=True)
 
 with containerListOne:
     containerListOne.markdown("## Buscar um produto")
     id = containerListOne.text_input('ID do produto para pesquisa')
-    SearchOneButton = containerListOne.button('procurar')
+    SearchOneButton = containerListOne.button('Pesquisar')
 
     if SearchOneButton:
         product = SearchOneproduct(id)
 
         if product:
-            st.image(f'{product[3]}')
+            subCol1, subCol2 = containerListOne.columns(2)
+            subCol1.write(f'nome: {product[1]}')
+            subCol2.write(f'Preço: {product[2]}')
+            st.write('Imagem:')
+            try:
+                st.image(f'{product[3]}', width=200)
+            except:
+                st.write('Null')
+            subCol3, subCol4 = containerListOne.columns(2)
+            deleteButton = subCol4.button('Excluir')
 
-
-deleteButton = st.button('Excluir')
-
-if RegisterButton:
-    RegisterNewProduct(name, price, cod, image)
-
-if deleteButton:
-    DeleteProductByID(cod)
-
+            if deleteButton:
+                subCol3.write("Produto excluido com sucesso!")

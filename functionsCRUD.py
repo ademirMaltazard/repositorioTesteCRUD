@@ -14,12 +14,13 @@ def ConnectDB():
 
 
 def RegisterNewProduct(nome: str, preco: float, id: str, img: str):
-    ''' Faz a inserção de um produto no banco de dados. A imagem é a URL da imagem do produto na web.
+    '''Faz a inserção de um produto no banco de dados. A imagem é a URL da imagem do produto na web.
     Utilizar formatos encurtados com quantidade de caracteres inferiores a 100
     Você poderá usar o https://www.encurtarlink.com/ para ajustar ao formato adequado'''
 
     conexao, cursor = ConnectDB()
-    query = f"insert into produto (id_produto, nome_produto, preco_produto, image) value ('{id}', '{nome}',{preco},'{img}')"
+    query = (f"insert into produto (id_produto, nome_produto, preco_produto, image) "
+             f"value ('{id}', '{nome}',{preco},'{img}')")
 
     cursor.execute(query)
     conexao.commit()  # aqui é onde vamos inserir os dados
