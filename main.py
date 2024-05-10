@@ -9,9 +9,15 @@ with pagina1:
     try:
         products = SearchAllproducts()
         productsTable = pd.DataFrame(products, columns=('id', 'nome', 'preço'))
-        st.write(productsTable)
+        print(productsTable.__len__())
+        if productsTable.__len__() == 0:
+            pagina1.write("## Nenhum produto cadastrado!")
+        else:
+            pagina1.write(productsTable)
+
     except:
         pagina1.write('ERROR 404. Not found.')
+    pagina1.button("atualizar pagina")
 
 
 with pagina2:
