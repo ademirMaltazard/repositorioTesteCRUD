@@ -35,16 +35,24 @@ def DeleteProductByID(id):
     conexao.close()
     return print('Produto deletado com sucesso!')
 
-def SearchAllproducts():
+def SearchAllProducts():
     conexao, cursor = ConnectDB()
     query = f'SELECT id_produto, nome_produto, preco_produto FROM produto'
     cursor.execute(query)
     result = cursor.fetchall()
     return result
 
-def SearchOneproduct(id):
+def SearchOneProduct(id):
     conexao, cursor = ConnectDB()
     query = f'SELECT * FROM produto WHERE id_produto = "{id}"'
     cursor.execute(query)
     result = cursor.fetchone()
     return result
+
+def UpdateProduct(id, newName, newPrice, newImage):
+    conexao, cursor = ConnectDB()
+    print('na funcao', id, newName,newPrice, newImage)
+    query = f"UPDATE produto SET nome_produto = '{newName}', preco_produto = '{newPrice}', image = '{newImage}' WHERE id_produto = '{id}'"
+    cursor.execute(query)
+    conexao.commit()
+    return "Produto atualizado com sucesso!!!"
